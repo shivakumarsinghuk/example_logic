@@ -6,9 +6,9 @@ import sys
 from datetime import datetime, timedelta
 sys.path.append('../interfaces')   # path to directory containing helper.py
 
-from interfaces.Iuser_Interface import *
-from datatypes.config import *
-from utility.gsheet_utility import *
+from BusinessLogic.interfaces.Iuser_Interface import *
+from DataTypes.config import *
+from Utility.gsheet_utility import *
 
 LOGIC_CANDLE_INTERVAL = 0
 LOGIC_START_TIME = 1
@@ -24,7 +24,7 @@ class UserInterfaceConfig(IUserInterface):
         self.data = ConfigData()
         #optionstraddle-521182d6265d.json
         self.googlesheet_utility = gsheet_utility(account_file=key,
-                                                  spread_sheet_name="ORB_Nifty_Index")
+                                                  spread_sheet_name="ExampleLogic")
         self.gworksheet_config_data = self.googlesheet_utility.get_work_sheet("Config")
         self.__set_data()
 
