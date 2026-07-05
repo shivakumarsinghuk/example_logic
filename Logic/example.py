@@ -82,6 +82,7 @@ class LogicExample(ILogic):
         print(self.__class__.__name__, ":", "Exit sleep time: ", i_sleep_time)
         time.sleep(i_sleep_time)
         self.quotes_utility.stop()
+        self.quotes_utility.get_thread_info().join()
         print(self.__class__.__name__, ":", "End of Exiting Thread")
 
     def get_thread_info(self):
