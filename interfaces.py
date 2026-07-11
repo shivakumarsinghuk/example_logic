@@ -16,9 +16,9 @@ class LogicExampleInterface(ILogicInterface):
         self.broker = None
         self.obj_logic = None
 
-    def create(self, args, broker_utility_manager:utility_manager):
+    def create(self, args, broker_utility_manager:utility_manager, quotes_utility:QuoteUtility):
         print("Creating Example Logic Object")
-        self.obj_logic: LogicExample = LogicExample(args, broker_utility_manager)
+        self.obj_logic: LogicExample = LogicExample(args, broker_utility_manager, quotes_utility)
 
     def wait_for_completion(self):
         print("Wait For Completion", self.obj_logic.__class__.__name__)
@@ -27,6 +27,7 @@ class LogicExampleInterface(ILogicInterface):
             self.obj_logic.get_thread_info().join()
             print("After Joining thread")
 
-
+    def get_broker_utility(self):
+        print("Parent IUserInterfaceLogin get broker function")
 
 

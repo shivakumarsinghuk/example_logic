@@ -16,7 +16,7 @@ from Utility.nse_utility import *
 
 #logic class
 class LogicExample(ILogic):
-    def __init__(self, args, broker_utility_manager:utility_manager):
+    def __init__(self, args, broker_utility_manager:utility_manager, quotes_utility:QuoteUtility):
         # initialization from arguments
         self.logic_name = "LogicExample"
         self.obj_utility_manager = broker_utility_manager
@@ -26,7 +26,7 @@ class LogicExample(ILogic):
         self.trade_utility = self.obj_utility_manager.get_utility_object(self.obj_ui_adapter_login.get_data())
         self.option_chain_utility = self.obj_utility_manager.get_utility_object(self.obj_ui_adapter_login.get_data())
         self.nse_utility = nse_utitlity()
-        self.quotes_utility: QuoteUtility = QuoteUtility(self.order_utility)
+        self.quotes_utility: QuoteUtility = quotes_utility
         self.nifty_future: str = ""
         self.config_data = self.obj_ui_adapter_config.get_data()
 
@@ -63,6 +63,9 @@ class LogicExample(ILogic):
         # start the close order thread
         #start exit thread
         self.exit_thread.start()
+
+    def get_broker_utility(self):
+        return self.trade_utility
 
     def pre_requisite_thread_handler(self):
         print("Inside pre-requisite thread")
