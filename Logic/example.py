@@ -6,6 +6,8 @@ Zerodha Kite Connect - Historical Data
 from enum import Enum
 import traceback
 import threading
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from BusinessLogic.interfaces.ILogic import *
 from BrokerUtility.pal.utility_manager import *
@@ -13,6 +15,8 @@ from Utility.quotes_utility import *
 from BusinessLogic.example_logic.UserInterface.adapter.login.login import *
 from BusinessLogic.example_logic.UserInterface.adapter.config.config import *
 from Utility.nse_utility import *
+
+IST = ZoneInfo("Asia/Kolkata")
 
 #logic class
 class LogicExample(ILogic):
@@ -37,11 +41,11 @@ class LogicExample(ILogic):
 
 
         #update the trade date
-        trade_day = date.today() - timedelta(self.day_preset)
+        trade_day = datetime.now(IST).date() - timedelta(self.day_preset)
         date_str = trade_day.strftime("%d-%m-%Y")
 
         #pre requisite start time
-        self.pre_requisite_start_time = (datetime.now() + timedelta(seconds=10)).strftime('%H:%M:%S')
+        self.pre_requisite_start_time = (datetime.now(IST) + timedelta(seconds=10)).strftime('%H:%M:%S')
 
         #start time
         self.execution_start_time = "09:15:00"
@@ -80,7 +84,7 @@ class LogicExample(ILogic):
     def exit_execution_thread(self):
         print(self.__class__.__name__, ":", "Start of Exiting Thread")
         #end_time = datetime.strptime(self.config_data.end_time, '%H:%M:%S')
-        #i_sleep_time = (end_time - datetime.now()).seconds
+        #i_sleep_time = (end_time - datetime.now(IST).replace(tzinfo=None)).seconds
         i_sleep_time = 10
         print(self.__class__.__name__, ":", "Exit sleep time: ", i_sleep_time)
         time.sleep(i_sleep_time)
